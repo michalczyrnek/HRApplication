@@ -1,22 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HRDataService } from './Services/HRData.service';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
+export class AppComponent implements OnInit {
 
-  columnDefs = [
-    {headerName: 'Make', field: 'make'},
-    {headerName: 'Model', field: 'model'},
-    {headerName: 'Price', field: 'price'}
-];
+  absencesActive = true;
+  absencesHistoryActive = false;
+ workersActive = false;
 
-rowData = [
-    {make: 'Toyota', model: 'Celica', price: 35000},
-    {make: 'Ford', model: 'Mondeo', price: 32000},
-    {make: 'Porsche', model: 'Boxter', price: 72000}
-];
+constructor(private dataservice: HRDataService){}
+
+ngOnInit(){
+  this.dataservice.LoadData();
+}
+
+selectedTab(selected: number){
+
+switch (selected){
+
+  case 1:
+  this.absencesActive = true;
+  this.absencesHistoryActive = false;
+ this.workersActive = false;
+break;
+case 2:
+  this.absencesActive = false;
+  this.absencesHistoryActive = true;
+ this.workersActive = false;
+break;
+case 3:
+  this.absencesActive = false;
+  this.absencesHistoryActive = false;
+ this.workersActive = true;
+break;
+
+}
+}
 }

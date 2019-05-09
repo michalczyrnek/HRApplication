@@ -18,13 +18,29 @@ namespace HRApplication.Controllers
             _repo = repository;
         }
 
-        // GET: api/HRData
-        [HttpGet]
+        
+        [HttpGet("workers")]
         public async Task<IActionResult> GetWorkers()
         {
             var workers = await _repo.GetWorkers();
             return Ok(workers);
         }
+
+          [HttpGet("absences")]
+        public async Task<IActionResult> GetAbsence()
+        {
+            var absence = await _repo.GetAbsenceAssets();
+            return Ok(absence);
+        }
+
+          [HttpGet("absenceshistory")]
+        public async Task<IActionResult> GetAbsenceHistory()
+        {
+            var absencehistory = await _repo.GetAbsenceHistoryAssets();
+            return Ok(absencehistory);
+        }
+
+
 
        
     }

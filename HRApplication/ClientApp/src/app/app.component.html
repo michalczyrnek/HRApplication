@@ -1,13 +1,10 @@
 <div id="navbar">
-  <app-navbar></app-navbar>
+  <app-navbar (activeTabEvent)=selectedTab($event)></app-navbar>
   </div>
   <div id="maincontent">
-    <!-- <ag-grid-angular
-    style="width: 50%; height: 50%;"
-    class="ag-theme-balham"
-    [rowData]="rowData"
-    [columnDefs]="columnDefs">
-</ag-grid-angular> -->
-<app-maincontent></app-maincontent>
-  </div>
+<div *ngIf="absencesActive"><app-absencedata></app-absencedata></div>
+<div *ngIf="absencesHistoryActive"><app-absencehistorydata></app-absencehistorydata></div>
+<div *ngIf="workersActive"><app-workersdata></app-workersdata></div>
+
+</div>
 

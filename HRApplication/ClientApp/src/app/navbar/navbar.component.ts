@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HRDataService } from '../Services/HRData.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,14 @@ import { HRDataService } from '../Services/HRData.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  absencesActive = true;
+  absencesHistoryActive = false;
   workersActive = false;
-  absencesActive = false;
-  absenceHistoryActive = false;
+
+
+
+  @Output()
+  activeTabEvent = new EventEmitter<number>();
 
 
   constructor(private dataserviece: HRDataService) { }
@@ -17,11 +23,31 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
+
+
+  GetAbsences() {
+
+    this.workersActive = false;
+    this.absencesActive = true;
+    this.absencesHistoryActive = false;
+    this.activeTabEvent.emit(1);
+  }
+
+  GetAbsencesHistory() {
+
+    this.workersActive = false;
+    this.absencesActive = false;
+    this.absencesHistoryActive = true;
+    this.activeTabEvent.emit(2);
+  }
+
   GetWorkers() {
-    this.dataserviece.GetWorkersData();
+
     this.workersActive = true;
     this.absencesActive = false;
-    this.absenceHistoryActive = false;
+    this.absencesHistoryActive = false;
+    this.activeTabEvent.emit(3);
+    
   }
 
 }

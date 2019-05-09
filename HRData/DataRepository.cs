@@ -21,13 +21,33 @@ namespace HRData
             var assets = await  (from absence in _dataContext.Absences
                           join worker in _dataContext.Workers
                                on absence.WorkerID equals worker.ID
+                               where absence.AbsenceEnd.Date >= DateTime.Now.Date
                           select new AbsenceAsset
                           {
                               ID = absence.ID,
+                              WorkerID = worker.ID,
                               Name = worker.Name,
                               Position = worker.Position,
-                              AbsenceEnd = absence.AbsenceEnd,
-                              AbsenceStart = absence.AbsenceStart
+                              AbsenceEnd = absence.AbsenceEnd.Date,
+                              AbsenceStart = absence.AbsenceStart.Date
+                          }).ToListAsync();
+            return assets;
+        }
+
+        public async Task<List<AbsenceAsset>> GetAbsenceHistoryAssets()
+        {
+             var assets = await  (from absence in _dataContext.Absences
+                          join worker in _dataContext.Workers
+                               on absence.WorkerID equals worker.ID
+                               where absence.AbsenceEnd.Date < DateTime.Now.Date
+                          select new AbsenceAsset
+                          {
+                              ID = absence.ID,
+                              WorkerID = worker.ID,
+                              Name = worker.Name,
+                              Position = worker.Position,
+                              AbsenceEnd = absence.AbsenceEnd.Date,
+                              AbsenceStart = absence.AbsenceStart.Date
                           }).ToListAsync();
             return assets;
         }

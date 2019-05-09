@@ -11,5 +11,7 @@ namespace HRData
 
         Task<List<Worker>> GetWorkers();
         Task<List<AbsenceAsset>> GetAbsenceAssets();
+
+        Task<List<AbsenceAsset>> GetAbsenceHistoryAssets();
     }
 }
