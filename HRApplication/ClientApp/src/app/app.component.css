@@ -1,0 +1,16 @@
+#navbar{
+    position: fixed;
+    text-align: center;
+    background-color: black;
+    height: 100vh;
+    width: 200px;
+    border-right-color: white;
+    border-right-style: solid;
+  }
+  #maincontent{
+    margin-left: 250px;
+  }
+  div{
+    display: inline-table;
+    color:white;
+  }

@@ -1,0 +1,9 @@
+<div>HRApplication<br><br></div>
+<button (click)="GetActualAbsences()" type="button" class="btn btn-dark"> Absences</button>
+<button (click)="GetAbsencesHistory()" type="button" class="btn btn-dark"> Absences History</button>
+<button type="button" class="btn btn-dark" *ngIf="workersActive;else workersInActive" disabled>Workers</button>
+<ng-template #workersInActive>
+  <button (click)="GetWorkers()" type="button" class="btn btn-dark"> Workers</button>
+</ng-template>
+
+
