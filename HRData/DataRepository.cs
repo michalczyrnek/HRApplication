@@ -58,5 +58,30 @@ namespace HRData
             return workers;
 
         }
+
+        public async Task<Absence> AddNewAbsence(NewAbsenceAsset asset)
+        {
+            Absence newAbsence = new Absence()
+            {
+               
+                AbsenceStart = asset.AbsenceStart,
+                AbsenceEnd = asset.AbsenceEnd,
+                WorkerID = _dataContext.Workers.First(x=>x.Name==asset.Worker).ID
+            };
+
+           await _dataContext.Absences.AddAsync(newAbsence);
+            await _dataContext.SaveChangesAsync();
+
+            return newAbsence;
+        }
+
+        public async Task<List<Absence>> DeleteAbsences(List<Absence> absencestoRemove)
+        {
+             _dataContext.Absences.RemoveRange(absencestoRemove);
+            await _dataContext.SaveChangesAsync();
+
+            return absencestoRemove;
+
+        }
     }
 }

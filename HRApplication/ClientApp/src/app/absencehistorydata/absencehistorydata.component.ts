@@ -9,8 +9,8 @@ import { HRDataService } from '../Services/HRData.service';
 export class AbsencehistorydataComponent implements OnInit {
   columnDefs = [
 
-    {headerName: 'Worker ID', field: 'workerID', width: 100},
     {headerName: 'Name', field: 'name',  width: 150},
+    {headerName: 'ID', field: 'workerID', width: 60},
     {headerName: 'Position', field: 'position',  width: 150},
     {headerName: 'Absence Start', field: 'absenceStart', width: 150, valueFormatter: dateFormatter},
     {headerName: 'Absence End', field: 'absenceEnd', width: 150, valueFormatter: dateFormatter}

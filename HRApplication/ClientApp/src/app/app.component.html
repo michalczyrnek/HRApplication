@@ -1,10 +1,15 @@
-<div id="navbar">
-  <app-navbar (activeTabEvent)=selectedTab($event)></app-navbar>
-  </div>
-  <div id="maincontent">
-<div *ngIf="absencesActive"><app-absencedata></app-absencedata></div>
-<div *ngIf="absencesHistoryActive"><app-absencehistorydata></app-absencehistorydata></div>
-<div *ngIf="workersActive"><app-workersdata></app-workersdata></div>
 
-</div>
+  <div id="navbar">
+    <app-navbar (activeTabEvent)=selectedTab($event)></app-navbar>
+    </div>
+  <div id="maincontent">
+    <div *ngIf="absencesActive"><app-absencedata></app-absencedata></div>
+    <div *ngIf="absencesHistoryActive"><app-absencehistorydata></app-absencehistorydata></div>
+    <div *ngIf="workersActive"><app-workersdata></app-workersdata></div>
+  </div>
+
+
+
+
+
 

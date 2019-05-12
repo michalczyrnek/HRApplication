@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRApplication", "HRApplicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRData", "HRData\HRData.csproj", "{3096BF69-68D6-4C39-B85C-7CFF39FD0212}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRApplicationsTests", "HRApplicationsTests\HRApplicationsTests.csproj", "{1E5769DD-495C-4AD5-801B-B600234AD0B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3096BF69-68D6-4C39-B85C-7CFF39FD0212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3096BF69-68D6-4C39-B85C-7CFF39FD0212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3096BF69-68D6-4C39-B85C-7CFF39FD0212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E5769DD-495C-4AD5-801B-B600234AD0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E5769DD-495C-4AD5-801B-B600234AD0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E5769DD-495C-4AD5-801B-B600234AD0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E5769DD-495C-4AD5-801B-B600234AD0B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

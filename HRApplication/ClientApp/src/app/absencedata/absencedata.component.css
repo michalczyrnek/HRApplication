@@ -1,0 +1,43 @@
+#tab{
+  width:665px;
+  height: 500px;
+  margin: auto;
+  margin-top: 30px;
+}
+#newAbsence{
+  margin: auto;
+  margin-top: 50px;
+  padding: 25px;
+  width:665px;
+  height: 200px;
+  background-color: rgb(32, 37, 43);
+
+}
+
+button{
+margin-top: 10px;
+
+}
+#list{
+  float:left;
+}
+#dates{
+  float:none;
+  width: 100px;
+}
+#applyButton{
+  float: right;
+  width: 100px;
+}
+
+/deep/ .mat-form-field-type-mat-select .mat-form-field-label {
+  color: white;
+}
+
+/deep/ .mat-select-value{
+  color: white;
+}
+/deep/ div{
+  color:white;
+}
+

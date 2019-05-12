@@ -1,8 +1,27 @@
+<div>
 <ag-grid-angular
-    style="width: 700px; height: 500px; margin-top:20px;"
+#agGrid
+    id="tab"
     class="ag-theme-balham-dark"
     [enableSorting]="true"
     [enableFilter]="true"
+    [rowSelection]="rowSelection"
     [rowData]="rowData"
-    [columnDefs]="columnDefs">
+    [columnDefs]="columnDefs"
+    (gridReady)="onGridReady($event)">
+
 </ag-grid-angular>
+</div>
+
+<button type="button" class="btn btn-dark" (click)="ApplyDelete()">Delete Absences</button>
+
+
+<div id="newAbsence">
+ <app-newabsence (NewAbsenceEvent)="Reload($event)"></app-newabsence>
+</div>
+
+
+
+
+
+

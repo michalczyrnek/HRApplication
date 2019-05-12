@@ -13,5 +13,9 @@ namespace HRData
         Task<List<AbsenceAsset>> GetAbsenceAssets();
 
         Task<List<AbsenceAsset>> GetAbsenceHistoryAssets();
+
+        Task<Absence> AddNewAbsence(NewAbsenceAsset asset);
+
+        Task<List<Absence>> DeleteAbsences(List<Absence> absencestoRemove);
     }
 }

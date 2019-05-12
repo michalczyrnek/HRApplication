@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
-
-
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -12,6 +10,17 @@ import { HRDataService } from './Services/HRData.service';
 import { WorkersdataComponent } from './workersdata/workersdata.component';
 import { AbsencedataComponent } from './absencedata/absencedata.component';
 import { AbsencehistorydataComponent } from './absencehistorydata/absencehistorydata.component';
+import { NewabsenceComponent } from './newabsence/newabsence.component';
+
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+
+
+
 
 
 @NgModule({
@@ -20,13 +29,21 @@ import { AbsencehistorydataComponent } from './absencehistorydata/absencehistory
       NavbarComponent,
       WorkersdataComponent,
       AbsencedataComponent,
-      AbsencehistorydataComponent
+      AbsencehistorydataComponent,
+      NewabsenceComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    AgGridModule.withComponents([WorkersdataComponent,AbsencedataComponent, AbsencehistorydataComponent])
+    ReactiveFormsModule,
+    AgGridModule.withComponents([WorkersdataComponent,AbsencedataComponent, AbsencehistorydataComponent]),
+    MatSelectModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatTableModule,
+    BrowserAnimationsModule
 
   ],
   providers: [HRDataService],
