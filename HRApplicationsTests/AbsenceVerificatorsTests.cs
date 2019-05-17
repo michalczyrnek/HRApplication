@@ -14,12 +14,12 @@ namespace HRApplicationsTests
         [TestMethod]
         public void ShouldReturnFalseForAbsenceEndEarlierThanStart()
         {
-            DateTime end = new DateTime();
-            DateTime start = new DateTime();
-            end.AddMonths(2);
-            start.AddMonths(3);
+            DateTime end = DateTime.Now;
+            DateTime start = DateTime.Now;
+            end = end.AddMonths(2);
+            start = start.AddMonths(3);
 
-           var result =  verificator.DateVeryficator(start, end);
+            var result = verificator.DateVeryficator(start, end);
 
             Assert.IsFalse(result);
 
@@ -31,7 +31,6 @@ namespace HRApplicationsTests
             DateTime end = DateTime.Parse("10.05.2018");
             DateTime start = DateTime.Parse("08.05.2018");
 
-            start.AddMonths(-3);
 
             var result = verificator.DateVeryficator(start, end);
 
@@ -39,7 +38,35 @@ namespace HRApplicationsTests
 
         }
 
-        
+        [TestMethod]
+        public void ShouldReturnFalseForTimeSpanLongerThanLimit()
+        {
+            DateTime end = DateTime.Now;
+            DateTime start = DateTime.Now;
+            end = end.AddDays(10);
+            int limit = 5;
+
+            var result = verificator.AbsenceLimitVeryficator(limit, start, end);
+
+            Assert.IsFalse(result);
+
+        }
+
+        [TestMethod]
+        public void ShouldReturTrueForTimeSpanShorterThanLimit()
+        {
+            DateTime end = DateTime.Now;
+            DateTime start = DateTime.Now;
+            end = end.AddDays(5);
+            int limit = 15;
+
+            var result = verificator.AbsenceLimitVeryficator(limit, start, end);
+
+            Assert.IsTrue(result);
+
+        }
+
+
 
     }
 }

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HRDataService } from './Services/HRData.service';
@@ -18,6 +19,7 @@ import {MatInputModule} from '@angular/material';
 import { MatNativeDateModule } from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -43,7 +45,8 @@ import {MatTableModule} from '@angular/material/table';
     MatInputModule,
     MatNativeDateModule,
     MatTableModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule.forRoot([])
 
   ],
   providers: [HRDataService],

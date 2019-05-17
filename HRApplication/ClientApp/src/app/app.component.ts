@@ -16,7 +16,9 @@ export class AppComponent implements OnInit {
 constructor(private dataservice: HRDataService){}
 
 ngOnInit(){
+
   this.dataservice.LoadData();
+
 }
 
 selectedTab(selected: number){

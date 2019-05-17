@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+
 
 
 @Injectable({
@@ -14,15 +15,25 @@ export class HRDataService {
   private absenceHistory = new Array<any>();
   private absenceHistoryDataToView = new BehaviorSubject<Array<any>>([]);
 
-  private workersUrl = 'https://localhost:5001/api/hrdata/workers';
-  private absenceUrl = 'https://localhost:5001/api/hrdata/absences';
-  private absenceHistoryUrl = 'https://localhost:5001/api/hrdata/absenceshistory';
-  private newAbsenceUrl = 'https://localhost:5001/api/hrdata/newabsence';
-  private deleteUrl = 'https://localhost:5001/api/hrdata/deleteabsences';
+  baseUrl: string;
+  private workersUrl = this.baseUrl + '/api/hrdata/workers';
+  private absenceUrl = this.baseUrl + '/api/hrdata/absences';
+  private  absenceHistoryUrl = this.baseUrl + '/api/hrdata/absenceshistory';
+  private  newAbsenceUrl = this.baseUrl+ '/api/hrdata/newabsence';
+  private  deleteUrl = this.baseUrl + '/api/hrdata/deleteabsences';
 
 
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+    this.baseUrl = window.location.origin;
+    this.workersUrl = this.baseUrl + '/api/hrdata/workers';
+    this.absenceUrl = this.baseUrl + '/api/hrdata/absences';
+    this.absenceHistoryUrl = this.baseUrl + '/api/hrdata/absenceshistory';
+    this.newAbsenceUrl = this.baseUrl + '/api/hrdata/newabsence';
+    this.deleteUrl = this.baseUrl + '/api/hrdata/deleteabsences';
+
+  }
 
   LoadData(): void {
 

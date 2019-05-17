@@ -46,14 +46,18 @@ namespace HRApplication.Controllers
 
         public async Task<IActionResult> ApplyNewAbsence(NewAbsenceAsset asset )
         {
-            if (new NewAbsenceVeryficators().DateVeryficator(asset.AbsenceStart, asset.AbsenceEnd))
+            var veryficator = new NewAbsenceVeryficators();
+            var workers = await _repo.GetWorkers();
+            var limit = workers.First(x => x.Name == asset.Worker).AbsenceLimit;
+            if (veryficator.DateVeryficator(asset.AbsenceStart, asset.AbsenceEnd)
+                && veryficator.AbsenceLimitVeryficator(limit, asset.AbsenceStart, asset.AbsenceEnd))
             {
                 var absence = await _repo.AddNewAbsence(asset);
                 return StatusCode(201);
             }
             else
             {
-                return BadRequest("Can't add new absence. Check data correctness.");
+                return BadRequest("Can't add new absence. Check data correctness or worker absence limit.");
             }
         }
 

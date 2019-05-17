@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HRDataService } from '../Services/HRData.service';
-import { FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -40,6 +40,8 @@ Reload(event){
     this.data.LoadData();
 
   }, 2000);
+
+
 
 }
 

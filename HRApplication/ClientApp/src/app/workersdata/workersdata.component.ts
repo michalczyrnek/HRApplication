@@ -10,7 +10,9 @@ export class WorkersdataComponent implements OnInit {
   columnDefs = [
     {headerName: 'ID', field: 'id', width: 60},
     {headerName: 'Name', field: 'name', width: 150},
-    {headerName: 'Position', field: 'position', width: 150}
+    {headerName: 'Position', field: 'position', width: 150},
+    {headerName: 'Leave days left', field: 'absenceLimit', width: 150}
+
 ];
 rowData = [];
 

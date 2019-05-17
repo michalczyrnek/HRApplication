@@ -18,6 +18,7 @@ namespace HRData
 
         public async Task<List<AbsenceAsset>> GetAbsenceAssets()
         {
+            CheckIsNewYear();
             var assets = await  (from absence in _dataContext.Absences
                           join worker in _dataContext.Workers
                                on absence.WorkerID equals worker.ID
@@ -33,6 +34,8 @@ namespace HRData
                           }).ToListAsync();
             return assets;
         }
+
+       
 
         public async Task<List<AbsenceAsset>> GetAbsenceHistoryAssets()
         {
@@ -69,6 +72,17 @@ namespace HRData
                 WorkerID = _dataContext.Workers.First(x=>x.Name==asset.Worker).ID
             };
 
+            var absenceSpan = asset.AbsenceEnd.Subtract(asset.AbsenceStart);
+            if (absenceSpan.Days > 0)
+            {
+                _dataContext.Workers.First(x => x.Name == asset.Worker).AbsenceLimit -= (absenceSpan.Days+1);
+            }
+            else
+            {
+                _dataContext.Workers.First(x => x.Name == asset.Worker).AbsenceLimit -= 1;
+            }
+
+
            await _dataContext.Absences.AddAsync(newAbsence);
             await _dataContext.SaveChangesAsync();
 
@@ -77,11 +91,30 @@ namespace HRData
 
         public async Task<List<Absence>> DeleteAbsences(List<Absence> absencestoRemove)
         {
-             _dataContext.Absences.RemoveRange(absencestoRemove);
+            foreach (var absence in absencestoRemove)
+            {
+                var absenceSpan = absence.AbsenceEnd.Subtract(absence.AbsenceStart);
+                _dataContext.Absences.Remove(absence);
+                _dataContext.Workers.First(x => x.ID == absence.WorkerID).AbsenceLimit += (absenceSpan.Days + 1);
+            }
+
             await _dataContext.SaveChangesAsync();
 
             return absencestoRemove;
 
         }
+        private async void CheckIsNewYear()
+        {
+            if (!(_dataContext.Workers.ToList()[0].Year == DateTime.Now.Year))
+            {
+                foreach (var worker in _dataContext.Workers)
+                {
+                    worker.Year = DateTime.Now.Year;
+                    worker.AbsenceLimit += 20;
+                }
+                await _dataContext.SaveChangesAsync();
+            }
+        }
+
     }
 }

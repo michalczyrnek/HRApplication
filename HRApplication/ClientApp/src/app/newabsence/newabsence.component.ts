@@ -1,5 +1,5 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
-import { FormControl,  } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, } from '@angular/forms';
 import { HRDataService } from '../Services/HRData.service';
 
 
@@ -10,10 +10,12 @@ import { HRDataService } from '../Services/HRData.service';
 })
 export class NewabsenceComponent implements OnInit {
   NewAbsenceAsset: any = {};
-  workers =[];
+  workers = [];
   selectedWorker;
-  AbsenceStart = new FormControl (new Date());
-  AbsenceEnd = new FormControl (new Date());
+  AbsenceStart = new FormControl(new Date());
+  AbsenceEnd = new FormControl(new Date());
+
+  statusMessage: string = "Status: ";
 
   @Output()
   NewAbsenceEvent = new EventEmitter<string>();
@@ -21,24 +23,28 @@ export class NewabsenceComponent implements OnInit {
   constructor(private data: HRDataService) { }
 
   ngOnInit() {
-    this.data.GetWorkersData().subscribe(data =>{
-      this.workers=data.slice();
+    this.data.GetWorkersData().subscribe(data => {
+      this.workers = data.slice();
     });
   }
 
-  AddAbsence(){
-  this.NewAbsenceAsset.worker=this.selectedWorker;
-  this.NewAbsenceAsset.AbsenceStart=this.AbsenceStart.value;
-this.NewAbsenceAsset.AbsenceEnd=this.AbsenceEnd.value;
+  AddAbsence() {
+    if (this.selectedWorker != null) {
+      this.NewAbsenceAsset.worker = this.selectedWorker;
+      this.NewAbsenceAsset.AbsenceStart = this.AbsenceStart.value;
+      this.NewAbsenceAsset.AbsenceEnd = this.AbsenceEnd.value;
+      this.NewAbsenceAsset.AbsenceStart.setHours(22);
+      this.NewAbsenceAsset.AbsenceEnd.setHours(22);
 
-    this.data.AddNewAbsence(this.NewAbsenceAsset).subscribe(
-    () => { console.log('New absence added') },
-    error =>
-    {
-      console.log(error);
-    });
+      this.data.AddNewAbsence(this.NewAbsenceAsset).subscribe(
+        () => { console.log('New absence added'); this.statusMessage = "Status: Success"; },
+        error => {
+          console.log(error);
+          this.statusMessage = "Status: Failure"
+        });
 
-    this.NewAbsenceEvent.emit("reload");
+      this.NewAbsenceEvent.emit("reload");
+    }
 
   }
 
