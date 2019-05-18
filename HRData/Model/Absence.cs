@@ -15,5 +15,8 @@ namespace HRData.Model
         public DateTime AbsenceStart { get; set; }
         [Required]
         public DateTime AbsenceEnd { get; set; }
+
+        [Required]
+        public bool L4 { get; set; }
     }
 }

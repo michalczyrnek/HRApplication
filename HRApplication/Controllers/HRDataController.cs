@@ -46,18 +46,37 @@ namespace HRApplication.Controllers
 
         public async Task<IActionResult> ApplyNewAbsence(NewAbsenceAsset asset )
         {
+          
             var veryficator = new NewAbsenceVeryficators();
-            var workers = await _repo.GetWorkers();
-            var limit = workers.First(x => x.Name == asset.Worker).AbsenceLimit;
-            if (veryficator.DateVeryficator(asset.AbsenceStart, asset.AbsenceEnd)
-                && veryficator.AbsenceLimitVeryficator(limit, asset.AbsenceStart, asset.AbsenceEnd))
+
+            if (veryficator.DateVeryficator(asset.AbsenceStart, asset.AbsenceEnd))
             {
-                var absence = await _repo.AddNewAbsence(asset);
-                return StatusCode(201);
+                if (asset.isL4)
+                {
+                    var absence = await _repo.AddNewAbsence(asset);
+                    return StatusCode(201);
+
+                }
+                
+                else
+                {
+                    var workers = await _repo.GetWorkers();
+                    var limit = workers.First(x => x.Name == asset.Worker).AbsenceLimit;
+                    if (veryficator.AbsenceLimitVeryficator(limit, asset.AbsenceStart, asset.AbsenceEnd))
+                    {
+                        var absence = await _repo.AddNewAbsence(asset);
+                        return StatusCode(201);
+                    }
+                    else
+                    {
+                        return BadRequest("Leave time exceeded the remaining days of employee limit");
+                    }
+                }
             }
+
             else
             {
-                return BadRequest("Can't add new absence. Check data correctness or worker absence limit.");
+                return BadRequest("Can't add new absence. Check data correctness.");
             }
         }
 

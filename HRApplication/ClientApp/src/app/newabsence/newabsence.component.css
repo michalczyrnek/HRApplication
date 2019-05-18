@@ -4,4 +4,7 @@ mat-form-field{
 input{
   color: white;
 }
+#checkbox{
+  margin-left: 10px;
+}
 

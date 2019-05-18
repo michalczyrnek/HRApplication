@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HRData.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using HRData.DataRepositoryTools;
 
 namespace HRData
 {
@@ -30,7 +31,9 @@ namespace HRData
                               Name = worker.Name,
                               Position = worker.Position,
                               AbsenceEnd = absence.AbsenceEnd.Date,
-                              AbsenceStart = absence.AbsenceStart.Date
+                              AbsenceStart = absence.AbsenceStart.Date,
+                              L4 = absence.L4
+
                           }).ToListAsync();
             return assets;
         }
@@ -50,7 +53,8 @@ namespace HRData
                               Name = worker.Name,
                               Position = worker.Position,
                               AbsenceEnd = absence.AbsenceEnd.Date,
-                              AbsenceStart = absence.AbsenceStart.Date
+                              AbsenceStart = absence.AbsenceStart.Date,
+                              L4 = absence.L4
                           }).ToListAsync();
             return assets;
         }
@@ -66,22 +70,26 @@ namespace HRData
         {
             Absence newAbsence = new Absence()
             {
-               
+
                 AbsenceStart = asset.AbsenceStart,
                 AbsenceEnd = asset.AbsenceEnd,
-                WorkerID = _dataContext.Workers.First(x=>x.Name==asset.Worker).ID
+                WorkerID = _dataContext.Workers.First(x => x.Name == asset.Worker).ID,
+                L4 = asset.isL4
             };
 
-            var absenceSpan = asset.AbsenceEnd.Subtract(asset.AbsenceStart);
-            if (absenceSpan.Days > 0)
-            {
-                _dataContext.Workers.First(x => x.Name == asset.Worker).AbsenceLimit -= (absenceSpan.Days+1);
-            }
-            else
-            {
-                _dataContext.Workers.First(x => x.Name == asset.Worker).AbsenceLimit -= 1;
-            }
+            if(!asset.isL4){
 
+                var absenceSpan = asset.AbsenceEnd.Subtract(asset.AbsenceStart);
+                if (absenceSpan.Days > 0)
+                {
+                    _dataContext.Workers.First(x => x.Name == asset.Worker).AbsenceLimit -= 
+                        (absenceSpan.Days+1)-FreeDaysCounter.CountFreeDays(asset.AbsenceStart,asset.AbsenceEnd);
+                }
+                else
+                {
+                    _dataContext.Workers.First(x => x.Name == asset.Worker).AbsenceLimit -= 1;
+                }
+            }
 
            await _dataContext.Absences.AddAsync(newAbsence);
             await _dataContext.SaveChangesAsync();
@@ -93,9 +101,14 @@ namespace HRData
         {
             foreach (var absence in absencestoRemove)
             {
-                var absenceSpan = absence.AbsenceEnd.Subtract(absence.AbsenceStart);
+                
                 _dataContext.Absences.Remove(absence);
-                _dataContext.Workers.First(x => x.ID == absence.WorkerID).AbsenceLimit += (absenceSpan.Days + 1);
+                if(!absence.L4)
+                {
+                var absenceSpan = absence.AbsenceEnd.Subtract(absence.AbsenceStart);
+                _dataContext.Workers.First(x => x.ID == absence.WorkerID).AbsenceLimit += 
+                        (absenceSpan.Days + 1) - FreeDaysCounter.CountFreeDays(absence.AbsenceStart, absence.AbsenceEnd);
+                }
             }
 
             await _dataContext.SaveChangesAsync();

@@ -18,7 +18,9 @@ export class AbsencedataComponent implements OnInit {
     {headerName: 'ID', field: 'workerID', width: 60},
     {headerName: 'Position', field: 'position',  width: 150},
     {headerName: 'Absence Start', field: 'absenceStart', width: 150, valueFormatter: dateFormatter},
-    {headerName: 'Absence End', field: 'absenceEnd', width: 150, valueFormatter: dateFormatter}
+    {headerName: 'Absence End', field: 'absenceEnd', width: 150, valueFormatter: dateFormatter },
+    { headerName: 'Absence Type', field: 'l4', width: 150, valueFormatter: absenceTypeFormatter}
+
 ];
 rowData = [];
 
@@ -46,11 +48,10 @@ Reload(event){
 }
 
   ApplyDelete() {
-    console.log("start");
+    
     var absencesToRemove = this.gridApi.getSelectedRows();
-    console.log(absencesToRemove);
     this.data.DeleteAbsences(absencesToRemove).subscribe(
-      () => { console.log('Delete complted') },
+      () => { console.log('Delete completed') },
       error =>
       {
         console.log(error);
@@ -71,4 +72,14 @@ Reload(event){
 
 function dateFormatter (params){
   return params.value.toString().substring(0,10);
+}
+
+function absenceTypeFormatter(params) {
+
+  if (params.value) {
+    return "L4";
+  }
+  else {
+    return "Normal";
+  }
 }

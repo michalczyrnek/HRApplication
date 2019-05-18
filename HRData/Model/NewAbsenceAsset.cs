@@ -9,5 +9,6 @@ namespace HRData.Model
         public string Worker { get; set; }
         public DateTime AbsenceStart { get; set; }
         public DateTime AbsenceEnd { get; set; }
+        public bool isL4 {get;set;}
     }
 }

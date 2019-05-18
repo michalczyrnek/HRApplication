@@ -11,6 +11,7 @@ import { HRDataService } from '../Services/HRData.service';
 export class NewabsenceComponent implements OnInit {
   NewAbsenceAsset: any = {};
   workers = [];
+  isL4:boolean = false;
   selectedWorker;
   AbsenceStart = new FormControl(new Date());
   AbsenceEnd = new FormControl(new Date());
@@ -35,12 +36,13 @@ export class NewabsenceComponent implements OnInit {
       this.NewAbsenceAsset.AbsenceEnd = this.AbsenceEnd.value;
       this.NewAbsenceAsset.AbsenceStart.setHours(22);
       this.NewAbsenceAsset.AbsenceEnd.setHours(22);
+      this.NewAbsenceAsset.isL4=this.isL4;
 
       this.data.AddNewAbsence(this.NewAbsenceAsset).subscribe(
         () => { console.log('New absence added'); this.statusMessage = "Status: Success"; },
         error => {
           console.log(error);
-          this.statusMessage = "Status: Failure"
+          this.statusMessage = "Status: " + error;
         });
 
       this.NewAbsenceEvent.emit("reload");

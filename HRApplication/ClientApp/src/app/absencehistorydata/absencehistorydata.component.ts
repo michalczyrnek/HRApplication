@@ -13,7 +13,10 @@ export class AbsencehistorydataComponent implements OnInit {
     {headerName: 'ID', field: 'workerID', width: 60},
     {headerName: 'Position', field: 'position',  width: 150},
     {headerName: 'Absence Start', field: 'absenceStart', width: 150, valueFormatter: dateFormatter},
-    {headerName: 'Absence End', field: 'absenceEnd', width: 150, valueFormatter: dateFormatter}
+    { headerName: 'Absence End', field: 'absenceEnd', width: 150, valueFormatter: dateFormatter },
+    { headerName: 'Absence Type', field: 'l4', width: 150, valueFormatter: absenceTypeFormatter }
+
+
 ];
 rowData = [];
 
@@ -30,4 +33,14 @@ rowData = [];
 
 function dateFormatter (params){
   return params.value.toString().substring(0,10);
+}
+
+function absenceTypeFormatter(params) {
+
+  if (params.value) {
+    return "L4";
+  }
+  else {
+    return "Normal";
+  }
 }

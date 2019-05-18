@@ -17,9 +17,10 @@ namespace HRData.DataRepositoryTools
 
         public bool AbsenceLimitVeryficator(int absencesLeft, DateTime absenceStart, DateTime absenceEnd)
         {
-            var absenceTime = absenceEnd.Date.Subtract(absenceStart.Date);
-            return (absenceTime.Days+1 <= absencesLeft) ? true : false;
-
+            var absenceSpan = absenceEnd.Date.Subtract(absenceStart.Date);
+            int daysOfAbsence = (absenceSpan.Days + 1) - FreeDaysCounter.CountFreeDays(absenceStart, absenceEnd);
+            return (daysOfAbsence <= absencesLeft) ? true : false;
+            
         }
 
     }
