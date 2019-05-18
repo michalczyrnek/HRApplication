@@ -42,7 +42,7 @@ export class NewabsenceComponent implements OnInit {
         () => { console.log('New absence added'); this.statusMessage = "Status: Success"; },
         error => {
           console.log(error);
-          this.statusMessage = "Status: " + error;
+          this.statusMessage = "Status: Failure";
         });
 
       this.NewAbsenceEvent.emit("reload");
